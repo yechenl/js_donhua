@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>多物体运动</title>
+	<style type="text/css">
+		body,div{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		#div{
+			position:relative;/*若没有这个相对定位，那下面的div不会运动，*/
+			top: 0;
+			left:0;
+			display: block;
+			width: 200px;
+			height: 100px;
+			background: #ac0;
+			margin-bottom: 20px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var divs=document.querySelectorAll("#div");
+			for (var i=0; i<divs.length;i++){
+				divs[i].timer=null;
+                divs[i].onmouseover=function(){
+                	startMove(this,400);
+                }
+                divs[i].onmouseout=function(){
+                	startMove(this,200);
+                }
+			}
+		}
+		// var timer=null;
+		function startMove(obj,iTaget){
+			clearInterval(obj.timer);
+			var divs=document.querySelectorAll("#div");
+            obj.timer=setInterval(function(){
+               // var speed=0;
+               // if(obj.offsetLeft<iTaget){
+               // 	speed=10;
+               // }else{ 
+               // 	speed=-10;
+               // }
+               var speed=(iTaget-obj.offsetLeft)/20;
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+               if(obj.offsetLeft==iTaget){
+               clearInterval(obj.timer);
+               }
+               else{
+                obj.style.left=obj.offsetLeft+speed+'px';
+               }
+            },30)
+
+		}
+	</script>
+</head>
+<body>
+      <div id="div"></div>
+      <div id="div"></div>
+      <div id="div"></div>
+      <div id="div"></div>
+</body>
+</html>

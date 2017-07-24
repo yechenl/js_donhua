@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	
+	<title>链式动画练习</title>
+    <style type="text/css">
+    	*{margin: 0; padding: 0;}
+    	.div1{ top: 0; left: 0; width: 200px; height: 200px; position: relative; opacity: 0.3;
+    	filter: alpha(opacity:30); background: #a00;}
+    </style>
+    <script type="text/javascript">
+    	window.onload=function(){
+          var div1=document.querySelector(".div1");
+          // console.log(div1);
+          div1.onmouseover=function(){
+          	var obj=this;
+          	startMove(obj,400,'width',function(){
+          		startMove(obj,400,'height',function(){
+          			startMove(obj,100,'opacity')
+          		})
+          	})
+          }
+          div1.onmouseout=function(){
+          startMove(this,30,'opacity',function(){
+          		startMove(div1,200,'height',function(){
+          			startMove(div1,200,'width')
+          		})
+          	})
+          }
+    	}
+    	var timer=null;
+    	function startMove(obj,iTagert,att,fn){
+          clearInterval(obj.timer);
+          var div1=document.querySelector(".div1");
+          
+          obj.timer=setInterval(function(){
+          	//对其透明度的值做处理
+          if(att=='opacity'){
+          	icu=Math.round(parseFloat(getStyle(obj,att))*100);
+
+          }else{
+            icu=parseInt(getStyle(obj,att));
+          }
+
+          	//设置缓冲速度
+            var speed=(iTagert-icu)/30;
+            speed=speed>0?Math.ceil(speed):Math.floor(speed);
+            if(icu == iTagert){
+            clearInterval(obj.timer)
+            if(fn){
+                fn()
+            }
+        }
+        else{
+        	if( att =='opacity'){
+        		obj.style.opacity=(icu+speed)/100;
+        	}else{
+        		obj.style[att]=icu+speed+'px';
+        	}
+        }
+     },30)
+ }
+    //取消边框对盒子变化的影响
+    function getStyle(obj,att){
+    if(obj.currentStyle){
+        return obj.currentStyle[att]
+    }
+    else{
+        return getComputedStyle(obj,false)[att]
+    }
+ }
+    </script>
+</head>
+<body>
+
+  <div class="div1"></div>
+
+</body>
+</html>

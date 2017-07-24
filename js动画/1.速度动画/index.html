@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>速度动画</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		#div1{
+			position:relative;
+			width: 200px;
+			height: 200px;
+			display: inline-block;
+			left: -200px;
+			top: 0;
+			background: #a60;
+		}
+		#share{
+			color: #fff;
+			position: absolute;
+			display: inline-block;
+			background: #360;
+		    left:200px;/*这个宽度以上面盒子宽度为起始点也就是上面盒子的最左边为0开始*/
+			top: 50%;
+			width: 50px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			margin-top: -30px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var div1=document.querySelector("#div1");
+			var share=document.querySelector("#share");
+			console.log(div1);
+			div1.onmouseover=function(){
+				startMove();
+			}
+			div1.onmouseout=function(){
+				startMove1();
+			}
+		}
+		var timer=null;
+		function startMove(){clearInterval(timer);
+			
+			var div1=document.querySelector("#div1");
+			timer = setInterval(function(){
+				if(div1.offsetLeft==0){
+					clearInterval(timer);
+				}
+				else{
+               div1.style.left=div1.offsetLeft+10+'px';}
+			},30)
+			// offsetleft就是当前位置的值
+
+		}
+		function startMove1(){
+			clearInterval(timer);
+			var div1=document.querySelector("#div1");
+			timer = setInterval(function(){
+				if(div1.offsetLeft==-200){
+					clearInterval(timer);
+				}
+				else{
+               div1.style.left=div1.offsetLeft-10+'px';}
+			},30)
+			// offsetleft就是当前位置的值
+
+		}
+	</script>
+</head>
+<body>
+   <div id="div1">
+   	    <span id="share">分享</span>
+   </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>透明动画练习</title>
+	<style type="text/css">
+		body,div{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		#div1{
+			width: 200px;
+			height: 200px;
+			display: block;
+			background: #a30;
+			top:0;
+			left: 0;
+			opacity:0.3;
+			filter: opacity(30);
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var div1=document.querySelector("#div1");
+			div1.onmouseover =function(){
+                startMove(100);
+         
+			}
+              div1.onmouseout =function(){
+              startMove(30);
+			}
+		}
+		var timer=null;
+		var alpha=30;
+		function startMove(iTaget){
+			clearInterval(timer);
+            var div1=document.querySelector("#div1");
+            timer=setInterval(function(){
+            	var speed=0;
+            	if(alpha>iTaget){
+            		speed=-10;
+            	}
+            	else{
+            		speed=10;
+            	}
+            	if(alpha==iTaget){
+            		clearInterval(timer);
+            	}
+            	else{
+                alpha+=speed;
+                div1.style.opacity=alpha/100;
+            	}
+            },30)
+		}
+	</script>
+</head>
+<body>
+  <div id="div1"></div>
+</body>
+</html>

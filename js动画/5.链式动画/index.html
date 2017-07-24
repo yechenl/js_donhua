@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+<style type="text/css">
+*{
+    margin: 0;
+    padding: 0;
+}
+div{
+    width:200px;
+    height:200px;
+    background: red;
+    position: relative;
+    top:0;
+    opacity: 0.3;
+    filter: alpha(opacity:30);
+    margin: 10px;
+    border: 2px solid blue;
+
+   
+}
+</style>
+<script type="text/javascript"> 
+ window.onload=function(){
+    var box=document.getElementById("box")
+ 
+        box.onmouseover=function(){
+             var g=this;
+            startMove(g,100,'opacity',function(){
+                startMove(g,400,'width',function(){
+                    startMove(g,300,'height')
+                })
+            })
+        }
+        box.onmouseout=function(){
+            startMove(this,30,'opacity',function(){
+                startMove(box,200,'width',function(){
+                    startMove(box,200,'height')
+                })
+            })
+        }
+     
+ }
+ var timer=null
+ function startMove(obj,iTarget,attr,fn){
+        clearInterval(obj.timer)
+     //var box=document.getElementById("box")
+     obj.timer=setInterval(function(){
+      //判断是透明度还是值，对其进行处理
+        if(attr == 'opacity'){
+            icu=Math.round(parseFloat(getStyle(obj,attr))*100);
+        }else{
+            icu=parseInt(getStyle(obj,attr))
+        }
+        //设置缓冲速度
+        var speed=(iTarget-icu)/30
+        if(speed>0){
+            speed=Math.ceil(speed)
+        }
+        else{
+            speed=Math.floor(speed)
+        }
+        if(icu == iTarget){
+        clearInterval(obj.timer)
+            if(fn){
+                fn()
+            }
+        }
+        else{
+            if(attr=='opacity'){
+                obj.style.opacity = (icu+speed)/100;
+ 
+            }else{
+                obj.style[attr] = icu+speed+"px"
+            }
+ 
+        }
+     },30)
+ }
+ function getStyle(obj,attr){
+    if(obj.currentStyle){
+        return obj.currentStyle[attr]
+    }
+    else{
+        return getComputedStyle(obj,false)[attr]
+    }
+ }
+</script>
+</head>
+<body>
+<div id="box"></div>
+ 
+</body>
+</html>

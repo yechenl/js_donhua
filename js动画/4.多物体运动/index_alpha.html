@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>多物体运动</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin:0;	
+			list-style: none;	
+		}
+		#div1{
+			width: 200px;
+			height: 200px;
+			background: #c40;
+			filter: alpha(opactiy:30);
+			opacity: 0.3;
+			position: relative;
+			float: left;
+			margin-left: 20px;
+
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var divs=document.querySelectorAll("#div1");
+			 // console.log(divs);
+			for(var i=0;i<divs.length;i++){
+              divs[i].alpha=30;
+			  divs[i].onmouseover=function(){
+				startMove(this,100);
+			  }
+			  divs[i].onmouseout=function(){
+				startMove(this,30);
+			 }
+		   }
+		}
+		function startMove(obj,iTagert){
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function(){
+				var speed=0;
+				if(obj.alpha>iTagert){
+					speed=-10;
+				}
+				else{
+					speed=10;
+				}
+				if(obj.alpha==iTagert){
+					clearInterval(obj.timer);
+				}else{
+					obj.alpha+=speed;
+					obj.style.filter="alpha(opacity:'+obj.alpha+')";
+					obj.style.opacity=obj.alpha/100;
+				}
+			},30)
+		}
+	</script>
+</head>
+<body>
+      <div id="div1"></div>
+      <div id="div1"></div>
+      <div id="div1"></div>
+      <div id="div1"></div>
+</body>
+</html>
